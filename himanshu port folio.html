@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Portfolio</title>
+    <link rel="stylesheet" href="style.css"> <!-- Link to external CSS -->
+    <style>
+        /* Add smooth scrolling */
+        html {
+            scroll-behavior: smooth; /* Enable smooth scrolling for the entire document */
+        }
+        /* Add animations */
+        html, body {
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+        }
+        body {
+            font-family: 'Times New Roman', Times, serif; /* Set font to Times New Roman for the entire portfolio */
+            background-color: #f4f4f9; /* Light background for a professional look */
+        }
+
+        * {
+            transition: all 0.3s ease-in-out; /* Apply smooth transitions globally */
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for a floating effect */
+            animation: slideDown 1s ease-in-out;
+            background-color: #00008B; /* Set background color to dark blue */
+            color: #fff; /* Set text color to white */
+            font-family: 'Times New Roman', Times, serif; /* Update font for navigation */
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+            list-style: none;
+            margin: 0;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #fff;
+            transition: color 0.3s ease, transform 0.3s ease; /* Smooth hover effect */
+            scroll-behavior: smooth; /* Smooth scrolling for navigation links */
+        }
+
+        nav ul li a:hover {
+            color: #FFD700; /* Gold color for hover effect */
+            transform: scale(1.1); /* Slight zoom effect */
+        }
+
+        .theme-switch {
+            margin-left: 20px;
+            display: inline-block;
+            position: relative;
+            width: 40px;
+            height: 20px;
+        }
+
+        .theme-switch input {
+            display: none;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 20px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #00008B;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+
+        body.dark-theme {
+            background-color: #121212; /* Dark black background */
+            color: #ffffff; /* White font color */
+        }
+
+        body.dark-theme nav {
+            background-color: #1f1f1f; /* Dark grey for navigation bar */
+        }
+
+        body.dark-theme .hero-container {
+            background: linear-gradient(to bottom, #2e2e2e, #3a3a3a); /* Grey gradient for hero section */
+            color: #ffffff; /* White font color */
+        }
+
+        body.dark-theme .achievement-box {
+            background-color: #1f1f1f; /* Dark grey for achievement boxes */
+            color: #ffffff; /* White font color */
+            border-color: #333333; /* Slightly lighter grey for borders */
+        }
+
+        body.dark-theme h2 {
+            color: #ffffff; /* White font color for headings */
+        }
+
+        body.dark-theme .btn {
+            background-color: #333333; /* Dark grey for buttons */
+            color: #ffffff; /* White font color */
+        }
+
+        body.dark-theme .btn:hover {
+            background-color: #444444; /* Slightly lighter grey on hover */
+        }
+
+        body.dark-theme footer {
+            background-color: #1f1f1f; /* Dark grey for footer */
+            color: #ffffff; /* White font color */
+        }
+
+        body.dark-theme .hero-subtitle {
+            color: #ffffff; /* White font color for hero subtitle */
+        }
+
+        body.dark-theme .social-icons a {
+            color: #ffffff; /* White font color for social icons */
+        }
+
+        body.dark-theme .social-icons a:hover {
+            color: #bbbbbb; /* Lighter grey on hover */
+        }
+
+        body.dark-theme .achievement-box strong {
+            color: #ffffff; /* White color for achievement titles in dark mode */
+        }
+
+        .hero-container {
+            background: linear-gradient(to bottom, #00008B, #1E90FF); /* Gradient background */
+            color: #fff;
+            padding: 50px 20px;
+            border-radius: 10px;
+            animation: fadeIn 2s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Center align content horizontally */
+            text-align: center; /* Center align text */
+            flex-direction: column; /* Stack photo and text vertically */
+        }
+
+        .hero-photo {
+            width: 300px; /* Maintain increased size */
+            height: 300px;
+            border-radius: 50%;
+            margin-bottom: 20px; /* Add spacing below photo */
+            border: 5px solid #fff; /* Add border around the photo */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+        }
+
+        .hero-text h1 {
+            margin-bottom: 0; /* Remove spacing below main heading */
+            text-shadow: 4px 4px 10px rgba(0, 0, 0, 1); /* Apply stronger shadow effect */
+            font-family: inherit; /* Keep the font of "Welcome to My Portfolio" unchanged */
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem; /* Add subtitle styling */
+            color: #000; /* Change color to black */
+            margin-top: 0; /* Remove spacing above subtitle */
+            text-align: center; /* Center align subtitle */
+        }
+
+        .hero-text {
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .hero-text p {
+            font-family: 'Times New Roman', Times, serif; /* Update font for hero section text */
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #FFD700; /* Gold button */
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #FFA500; /* Orange hover effect */
+            transform: translateY(-3px); /* Lift effect */
+        }
+
+        section {
+            padding: 50px 20px;
+            margin: 20px auto;
+            max-width: 1200px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for sections */
+            animation: slideUp 1s ease-in-out;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #00008B;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background-color: #FFD700; /* Gold underline */
+            margin: 10px auto 0;
+        }
+
+        .achievements-container {
+            display: grid; /* Use grid layout */
+            grid-template-columns: repeat(2, 1fr); /* Two columns */
+            gap: 20px; /* Spacing between items */
+            padding: 20px;
+            animation: fadeIn 1.5s ease-in-out; /* Add fade-in animation */
+        }
+
+        .achievement-box {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            font-family: 'Times New Roman', Times, serif; /* Update font for achievements */
+            font-size: 1.2rem; /* Increase font size */
+            text-align: center; /* Align text to center */
+        }
+
+        .achievement-box strong {
+            font-size: 1.5rem; /* Increase size of highlighted text */
+            color: #000; /* Ensure highlighted text is black */
+        }
+
+        .achievement-box:hover {
+            transform: translateY(-5px); /* Lift effect */
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #00008B;
+            color: #fff;
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        .social-icons {
+            margin-top: 10px;
+        }
+
+        .social-icons a {
+            margin: 0 10px;
+            color: #fff;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #FFD700; /* Gold color on hover */
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9); /* Start smaller for popup effect */
+            }
+            to {
+                opacity: 1;
+                transform: scale(1); /* End at normal size */
+            }
+        }
+    </style>
+    <script>
+        // Toggle theme functionality
+        function toggleTheme() {
+            const body = document.body;
+            if (body.classList.contains('dark-theme')) {
+                body.classList.remove('dark-theme'); // Switch to normal theme
+            } else {
+                body.classList.add('dark-theme'); // Switch to dark theme
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#achievements">Achievements</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li>
+                <label class="theme-switch">
+                    <input type="checkbox" onclick="toggleTheme()">
+                    <span class="slider"></span>
+                </label>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="hero">
+        <div class="hero-container">
+            <img src="WhatsApp Image 2025-04-25 at 17.51.30.jpeg" alt="Himanshu Gharde's Photo" class="hero-photo">
+            <div class="hero-text">
+                <h1>Welcome to My Portfolio</h1>
+                <p class="hero-subtitle" style="width: 100%;">AI Engineer | Web Developer | Problem Solver</p>
+                <p>Hi, I'm Himanshu Gharde, an AIML student.</p>
+                <a href="#projects" class="btn">View My Work</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2>About Me</h2>
+        <p>Hi, I'm Himanshu Gharde, a passionate AIML student. I am currently exploring the fascinating world of Artificial Intelligence and Machine Learning, building projects, and enhancing my skills in this domain.</p>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements">
+        <h2>Achievements</h2>
+        <div class="achievements-container">
+            <div class="achievement-box">
+                <p><strong>NASSCOM Certification</strong><br>Earned a prestigious certification from NASSCOM, showcasing expertise in emerging technologies and industry standards</p>
+            </div>
+            <div class="achievement-box">
+                <p><strong>Cisco Certification</strong><br>Achieved Cisco Certification, demonstrating proficiency in networking concepts and IT infrastructure management</p>
+            </div>
+            <div class="achievement-box">
+                <p><strong>Great Learning Certificate of Oracle SQL</strong><br>Successfully completed a certification course on Oracle SQL from Great Learning, demonstrating expertise in database management and query optimization</p>
+            </div>
+            <div class="achievement-box">
+                <p><strong>Understanding and implementation of firewall</strong><br>Gained knowledge and practical experience in configuring and managing firewalls to enhance network security</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <h2>My Projects</h2>
+        <div class="achievements-container">
+            <div class="achievement-box">
+                <p><strong>Portfolio Website</strong><br>A responsive portfolio showcasing my skills and projects.</p>
+            </div>
+            <div class="achievement-box">
+                <p><strong>Advanced Water ATM Model</strong><br>Developed an IoT-enabled water ATM system with real-time monitoring and automated water dispensing functionality.</p>
+            </div>
+            <div class="achievement-box">
+                <p><strong>Chatbot for Healthcare</strong><br>Designed an AI-powered chatbot to assist patients with healthcare queries, appointment scheduling, and symptom analysis, ensuring better accessibility to medical services.</p>
+            </div>
+            <div class="achievement-box">
+                <p><strong>Interactive Game</strong><br>Developed a browser-based interactive game using HTML5, CSS3, and JavaScript. The game features dynamic animations, scoring, and responsive design for an engaging user experience.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2>Contact Me</h2>
+        <form action="submit_form.php" method="POST">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" placeholder="Your Message" required></textarea>
+            <button type="submit">Send</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Himanshu Gharde. All rights reserved.</p>
+        <div class="social-icons">
+            <a href="https://twitter.com" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://facebook.com" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+    </footer>
+    <!-- Add Font Awesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>
